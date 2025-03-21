@@ -6,7 +6,7 @@ async function main() {
   const [signer] = await ethers.getSigners();
 
   // Get the contract addresses from environment variables
-  const VAULT_ADDRESS = "0xDB5910C88dFa26D87768f44aec03103B18AA3Ee0";
+  const VAULT_ADDRESS = "0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35";
   const USDC_ADDRESS = "0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F";
 
   // Get the contract instances
@@ -20,7 +20,7 @@ async function main() {
   const payAmount = ethers.parseUnits("0.1", 18); // Paying 0.1 USDC (assuming 6 decimals)
 
   // Course ID (you need to replace this with an actual course ID)
-  const courseId = 1; // Replace with the actual course ID
+  const courseId = "123"; // Replace with the actual course ID
   // Approve the Vault to spend USDC
   console.log("Approving USDC...");
   const approveTx = await usdc.approve(VAULT_ADDRESS, payAmount);
