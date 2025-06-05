@@ -3,6 +3,7 @@ require("@openzeppelin/hardhat-upgrades");
 require("@typechain/hardhat");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
+require("@nomicfoundation/hardhat-chai-matchers");
 
 
 require("dotenv").config();
