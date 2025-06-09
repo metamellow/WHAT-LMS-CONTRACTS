@@ -8,13 +8,12 @@ async function main() {
 
   console.log("Deploying CoursePaymentVault (proxy) with account:", deployer.address);
 
-  const CoursePaymentVault = await ethers.getContractFactory("CoursePaymentVault");
+    const CoursePaymentVault = await ethers.getContractFactory("CoursePaymentVault", deployer);
   const vault = await upgrades.deployProxy(CoursePaymentVault, [usdcAddress], {
     initializer: "initialize",
   });
   await vault.deployed();
-
-  console.log("CoursePaymentVault (proxy) deployed to:", vault.address);
+  console.log(`>> Deployed at ${vault.address}`);
 
   const filePath = path.join(__dirname, "../deployed_addresses.json");
   let deployedAddresses = {};

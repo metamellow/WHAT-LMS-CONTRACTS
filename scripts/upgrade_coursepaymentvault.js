@@ -6,13 +6,17 @@ async function main() {
   const deployedAddressesPath = path.join(__dirname, "../deployed_addresses.json");
   const deployedAddresses = JSON.parse(fs.readFileSync(deployedAddressesPath, "utf8"));
   const proxyAddress = deployedAddresses.CoursePaymentVault; 
+  console.log(proxyAddress);
 
-  const CoursePaymentVaultV2 = await ethers.getContractFactory("CoursePaymentVaultV2");
+  const implAddress = await upgrades.erc1967.getImplementationAddress(proxyAddress);
+  console.log("Implementation address:", implAddress);
 
-  const upgraded = await upgrades.upgradeProxy(proxyAddress, CoursePaymentVaultV2);
-  await upgraded.deployed();
+  // const CoursePaymentVault = await ethers.getContractFactory("CoursePaymentVault");
 
-  console.log("CoursePaymentVault upgraded at:", upgraded.address);
+  // const upgraded = await upgrades.upgradeProxy(proxyAddress, CoursePaymentVault);
+  // await upgraded.deployed();
+
+  // console.log("CoursePaymentVault upgraded at:", upgraded.address);
 }
 
 main().catch((error) => {

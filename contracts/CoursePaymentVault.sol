@@ -39,7 +39,12 @@ contract CoursePaymentVault is
     mapping(address => KolEarning) public kolEarnings;
     mapping(address => mapping(string => uint256)) public kolCourseEarnings;
 
-    event Withdraw(string txId, address indexed user, uint256 amount);
+    event Withdraw(
+        string txId,
+        address indexed user,
+        uint256 amount,
+        uint256 nonce
+    );
     event Paid(address indexed user, string courseId, uint256 amount);
     event Execute(address indexed owner, uint256 amount);
 
@@ -120,11 +125,11 @@ contract CoursePaymentVault is
             usdc.balanceOf(address(this)) >= amountToWithdraw,
             "INSUFFICIENT_CONTRACT_BALANCE"
         );
+        IERC20Upgradeable(usdc).safeTransfer(msg.sender, amountToWithdraw);
         isTxIdUsed[_txId] = true;
         kolEarnings[msg.sender].availableToClaim = 0;
         nonces[msg.sender] += 1;
-        IERC20Upgradeable(usdc).safeTransfer(msg.sender, amountToWithdraw);
-        emit Withdraw(_txId, msg.sender, amountToWithdraw);
+        emit Withdraw(_txId, msg.sender, amountToWithdraw, _nonce);
     }
 
     function execute() external onlyOwner nonReentrant {
